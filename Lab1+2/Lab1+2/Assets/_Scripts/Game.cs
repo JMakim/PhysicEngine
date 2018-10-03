@@ -10,15 +10,19 @@ public class Game : MonoBehaviour
 
     private Rigidbody m_rb;
     public float pushForce = 0.0f;
-    private bool m_isRunning = false;
-    private bool powerStroke = false;
+    public bool m_isRunning = false;
+    public bool powerStroke = false;
+    public bool start = false;
     public float power = 0.0f;
+    public float drag = 1.0f;
+   
 
 
 
     // Use this for initialization
     void Start()
     {
+        start = false;
         m_rb = GetComponent<Rigidbody>();
     }
 
@@ -28,28 +32,40 @@ public class Game : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
+            if (!start) { 
             powerStroke = true;
-            m_isRunning = true;
+            start = true;
+            }
+        }
+
+
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            powerStroke = false;
 
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+       if (powerStroke)
         {
-            power = pushForce;
-            powerStroke = false;
-            m_isRunning = true;
+            power = Time.time * 10;
         }
+       
+       
     }
 
 
 
     void FixedUpdate()
     {
-        if (powerStroke)
-            power = power + Time.time;
-        if (!powerStroke)
-            pushForce = power;
-        if (m_isRunning)
-            m_rb.AddForce(transform.forward * power);
+        if(!powerStroke && start)
+        {  
+            m_rb.AddForce(Vector3.forward * power);
+            
+
+            
+            
+        }
+
+  
     }
 
 
