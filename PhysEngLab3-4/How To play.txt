@@ -1,0 +1,5 @@
+WASD to control x y axis
+press space once to lock axis
+hold down space to adjust power
+press F to finalize power
+press space to kick ball
