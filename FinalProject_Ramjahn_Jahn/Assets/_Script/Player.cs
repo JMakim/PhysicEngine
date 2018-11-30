@@ -4,36 +4,81 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     Rigidbody rb;
-
+    public bool inAir;
+    public bool jmpStart;
+    public GameControl gc;
+    
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        GameObject g = GameObject.FindGameObjectWithTag("GameController");
+        gc = g.GetComponent<GameControl>();
+        gc.isDead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Movement();
+        initJump();
 	}
 
 
     void Movement()
     {
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (!jmpStart)
         {
-            rb.velocity = Vector3.right * -5;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position += Vector3.right * -5 * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position += Vector3.forward * 5 * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.position += Vector3.forward * -5 * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.position += Vector3.right * 5 * Time.deltaTime;
+            }
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                if (!inAir)
+                {
+                    transform.position += Vector3.up * 5 * Time.deltaTime;
+                }
+            }
         }
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+    }
+
+    void initJump()
+    {
+        if(jmpStart)
         {
-            rb.velocity = Vector3.forward * 5;
+            transform.position +=  Vector3.up * 9 * Time.deltaTime;
+            transform.position +=  Vector3.forward * 8 * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "InitJump")
         {
-            rb.velocity = Vector3.forward * -5;
+            jmpStart = true;
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if(other.tag == "JmpStop")
         {
-            rb.velocity = Vector3.right * 5;
+            jmpStart = false;
+            gc.checkPoint = true;
+        }
+        if(other.tag == "Death")
+        {
+            gc.isDead = true;
+            Destroy(this.gameObject);
         }
     }
 }
