@@ -74,11 +74,30 @@ public class Player : MonoBehaviour {
         {
             jmpStart = false;
             gc.checkPoint = true;
+            gc.checkPoint2 = false;
+            gc.checkPoint3 = false;
+
         }
         if(other.tag == "Death")
         {
             gc.isDead = true;
             Destroy(this.gameObject);
+        }
+        if(other.tag == "CheckPoint2")
+        {
+            gc.checkPoint = false;
+            gc.checkPoint2 = true;
+            gc.checkPoint3 = false;
+        }
+        if (other.tag == "CheckPoint3")
+        {
+            gc.checkPoint = false;
+            gc.checkPoint2 = false;
+            gc.checkPoint3 = true;
+        }
+        if (other.tag == "falseFloor")
+        {
+            other.attachedRigidbody.useGravity = true;
         }
     }
 }

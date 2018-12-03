@@ -9,6 +9,9 @@ TagManager:
   - Blade
   - CheckPoint
   - Death
+  - CheckPoint2
+  - falseFloor
+  - CheckPoint3
   layers:
   - Default
   - TransparentFX

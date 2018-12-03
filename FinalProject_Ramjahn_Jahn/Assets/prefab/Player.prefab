@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114121338155838682}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e86d31e5310a5d42805c817e0cfb0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inAir: 0
+  jmpStart: 0
+  gc: {fileID: 0}
 --- !u!136 &136088325122704888
 CapsuleCollider:
   m_ObjectHideFlags: 1

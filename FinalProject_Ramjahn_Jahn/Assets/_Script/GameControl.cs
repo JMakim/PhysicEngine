@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour {
     public GameObject player;
+    public GameObject playerCur;
     public Transform Respawn;
+    public Transform Respawn2;
+    public Transform Respawn3;
     public bool checkPoint;
-    public bool checkPoint1;
     public bool checkPoint2;
     public bool checkPoint3;
     public bool isDead;
@@ -14,13 +16,14 @@ public class GameControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerCur = GameObject.FindGameObjectWithTag("Player");
 
     }
 
     // Update is called once per frame
     void Update () {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerCur = GameObject.FindGameObjectWithTag("Player");
+        death();
     }
 
 
@@ -29,6 +32,14 @@ public class GameControl : MonoBehaviour {
         if(isDead && checkPoint)
         {
             Instantiate(player, Respawn.transform.position, Respawn.transform.rotation);
+        }
+        if (isDead && checkPoint2)
+        {
+            Instantiate(player, Respawn2.transform.position, Respawn2.transform.rotation);
+        }
+        if (isDead && checkPoint3)
+        {
+            Instantiate(player, Respawn3.transform.position, Respawn3.transform.rotation);
         }
     }
 
