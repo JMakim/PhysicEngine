@@ -22,6 +22,7 @@ public class GameControl : MonoBehaviour {
     public bool win;
     public bool lose;
     public float life;
+    public bool grav;
 
 	// Use this for initialization
 	void Start () {
@@ -49,6 +50,7 @@ public class GameControl : MonoBehaviour {
         }
 
         SetlifeTxt();
+        Cheat();
     }
 
 
@@ -98,7 +100,22 @@ public class GameControl : MonoBehaviour {
     void SetlifeTxt()
     {
         lifeText.text = "Life: " + life;
-        if (life <= 0)
+        if (life <= -1)
             lose = true;
+    }
+    void Cheat()
+    {
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            life += 99;
+            playerCur.GetComponent<Rigidbody>().useGravity = false;
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            playerCur.GetComponent<Rigidbody>().useGravity = false;
+        }if (Input.GetKeyUp(KeyCode.K))
+        {
+            playerCur.GetComponent<Rigidbody>().useGravity = true;
+        }
     }
 }

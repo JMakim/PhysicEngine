@@ -5040,7 +5040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -15}
+  m_AnchoredPosition: {x: 36.4, y: -15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &529698528
@@ -7666,7 +7666,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &804051395
 MeshFilter:
@@ -8515,6 +8515,7 @@ MonoBehaviour:
   win: 0
   lose: 0
   life: 0
+  grav: 0
 --- !u!4 &911778512 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4596350103147946, guid: 43be2cc4b6e736743bac25859899bfa1,
