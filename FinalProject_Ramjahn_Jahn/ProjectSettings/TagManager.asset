@@ -12,6 +12,10 @@ TagManager:
   - CheckPoint2
   - falseFloor
   - CheckPoint3
+  - TargetOn
+  - TargetOff
+  - win
+  - Levitate
   layers:
   - Default
   - TransparentFX

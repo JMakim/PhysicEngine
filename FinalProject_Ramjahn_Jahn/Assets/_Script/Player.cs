@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     Rigidbody rb;
+    public GameControl gc;
     public bool inAir;
     public bool jmpStart;
-    public GameControl gc;
-    
+    public bool TargetOn;
+    public bool levitate;
+    public float leviDura = 5;
 
-	// Use this for initialization
-	void Start () {
+
+
+
+
+
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody>();
         GameObject g = GameObject.FindGameObjectWithTag("GameController");
         gc = g.GetComponent<GameControl>();
         gc.isDead = false;
+        leviDura = 5;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        GameObject g = GameObject.FindGameObjectWithTag("GameController");
+        gc = g.GetComponent<GameControl>();
         Movement();
-        initJump();
+        levi();
 	}
 
 
@@ -52,15 +62,25 @@ public class Player : MonoBehaviour {
                     transform.position += Vector3.up * 5 * Time.deltaTime;
                 }
             }
+            if(Input.GetKeyUp(KeyCode.R))
+            {
+                gc.isDead = true;
+                Destroy(this.gameObject);                
+            }
         }
     }
 
-    void initJump()
+    void levi()
     {
-        if(jmpStart)
+        if(levitate)
         {
-            transform.position +=  Vector3.up * 9 * Time.deltaTime;
-            transform.position +=  Vector3.forward * 8 * Time.deltaTime;
+            leviDura -= Time.deltaTime * 1;
+            this.rb.useGravity = false;
+            if (leviDura <= 0)
+                {
+                    this.rb.useGravity = true;
+                    levitate = false;
+                }
         }
     }
 
@@ -68,21 +88,21 @@ public class Player : MonoBehaviour {
     {
         if (other.tag == "InitJump")
         {
+            rb.AddForce(this.transform.up * 30, ForceMode.Impulse);
+            rb.AddForce(this.transform.forward * 75, ForceMode.Impulse);
             jmpStart = true;
         }
         if(other.tag == "JmpStop")
         {
             jmpStart = false;
+        }
+        if(other.tag == "CheckPoint")
+        {
             gc.checkPoint = true;
             gc.checkPoint2 = false;
             gc.checkPoint3 = false;
-
         }
-        if(other.tag == "Death")
-        {
-            gc.isDead = true;
-            Destroy(this.gameObject);
-        }
+        
         if(other.tag == "CheckPoint2")
         {
             gc.checkPoint = false;
@@ -98,6 +118,29 @@ public class Player : MonoBehaviour {
         if (other.tag == "falseFloor")
         {
             other.attachedRigidbody.useGravity = true;
+            other.attachedRigidbody.isKinematic = false;
+        }
+        if (other.tag == "Death")
+        {
+            gc.isDead = true;
+            Destroy(this.gameObject);
+        }
+
+        if(other.tag == "TargetOn")
+        {
+            TargetOn = true;
+        }
+        if (other.tag == "TargetOff")
+        {
+            TargetOn = false;
+        }
+        if(other.tag == "Levitate")
+        {
+            levitate = true;
+        }
+        if(other.tag == "win")
+        {
+            gc.win = true;
         }
     }
 }
